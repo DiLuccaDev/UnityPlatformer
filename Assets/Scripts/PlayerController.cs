@@ -40,30 +40,15 @@ public class PlayerController : MonoBehaviour {
         currJumpForce = DefaultJumpForce;
     }
 
-    /* void FixedUpdate()
-     {
-         // Apply Gravity
-         velocity.y += Gravity;
+    void Update() {
 
-         // Apply Movement
-         Vector3 moveDirection = new Vector3(inputMovement.x, 0, inputMovement.y);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
 
-         // Apply Jump
-         if (inputJump && isGrounded)
-         {
-             velocity.y += currJumpForce;
-             inputJump = false;
-         }
-
-         // Reset vertical velocity when grounded
-         if (isGrounded && velocity.y < 0)
-         {
-             velocity.y = 0f;
-         }
-
-         playerMesh.transform.Translate(moveDirection * currMovementSpeed, Space.World);
-         playerMesh.transform.Translate(velocity, Space.World);
-     }*/
+        // Reset vertical velocity when grounded
+        if (isGrounded && velocity.y < 0) {
+            velocity.y = 0f;
+        }
+    }
 
     // Update is called once per frame
     void FixedUpdate() {
@@ -71,6 +56,7 @@ public class PlayerController : MonoBehaviour {
         velocity.y += Gravity;
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer | wallLayer);
 
         // Apply Jump
         if (inputJump && isGrounded) {
